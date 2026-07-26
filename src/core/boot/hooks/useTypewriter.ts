@@ -1,14 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export function useTypewriter(text: string, speed = 20) {
+export function useTypewriter(
+  text: string,
+  speed = 20,
+  onComplete?: () => void
+) {
   const [displayed, setDisplayed] = useState('');
+  const finished = useRef(false);
 
   useEffect(() => {
-    let index = 0;
+    // Don't replay the animation once it's finished.
+    if (finished.current) return;
 
-    setDisplayed('');
+    let index = 0;
 
     const interval = setInterval(() => {
       index++;
@@ -17,10 +23,13 @@ export function useTypewriter(text: string, speed = 20) {
 
       if (index >= text.length) {
         clearInterval(interval);
+        finished.current = true;
+        onComplete?.();
       }
     }, speed);
 
     return () => clearInterval(interval);
+
   }, [text, speed]);
 
   return displayed;

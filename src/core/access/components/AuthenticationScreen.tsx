@@ -1,21 +1,21 @@
-import { Cursor } from "./Cursor";
-import { BootRenderer } from "./BootRenderer";
-import type { BootLine as BootLineType } from "../types/boot";
+import { BootLine } from "../../boot/components/BootLine";
+import type { BootLine } from "../../boot/types/boot";
 
 interface Props {
-  lines: BootLineType[];
+  lines: BootLine[];
   onLineComplete: () => void;
 }
 
-export function BootScreen({
+export function AuthenticationScreen({
   lines,
   onLineComplete,
 }: Props) {
   return (
-    <div className="flex h-screen w-screen bg-black p-8">
-      <div className="font-mono text-lg leading-8">
+    <div className="flex h-screen items-center justify-center bg-black">
+      <div className="font-mono text-2xl text-green-400 space-y-4">
+
         {lines.map((line, index) => (
-          <BootRenderer
+          <BootLine
             key={line.id}
             line={line}
             onComplete={
@@ -25,8 +25,8 @@ export function BootScreen({
             }
           />
         ))}
-        <Cursor />
+
       </div>
     </div>
   );
-} 
+}

@@ -18,17 +18,23 @@ export const bootSequence: BootLine[] = [
   },
   {
     id: 4,
-    text: 'CPU.......................OK',
+    type: "status",
+    label: "CPU",
+    status: "OK",
     delay: 400,
   },
   {
     id: 5,
-    text: 'RAM.......................OK',
+    type: "status",
+    label: "RAM",
+    status: "OK",
     delay: 400,
   },
   {
     id: 6,
-    text: 'GPU.......................OK',
+    type: "status",
+    label: "GPU",
+    status: "OK",
     delay: 400,
   },
   {
