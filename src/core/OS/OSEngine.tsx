@@ -3,90 +3,116 @@
 import { useState } from "react";
 
 import type { SystemPhase } from "../system/phase";
-import { WelcomeEngine } from "../welcome/components/WelcomeEngine";
+import { AnimatePresence } from "framer-motion";
+
 import { BootEngine } from "../boot/components/BootEngine";
 import { KernelEngine } from "../kernel/components/KernelEngine";
 import { CountdownEngine } from "../countdown/components/CountdownEngine";
 import { AccessGrantedEngine } from "../access/components/AccessGrantedEngine";
 import { SessionEngine } from "../session/components/SessionEngine";
+import { WelcomeEngine } from "../welcome/components/WelcomeEngine";
 import { QuestionEngine } from "../question/components/QuestionEngine";
 
+import { ScreenTransition } from "../shared/components/ScreenTransition";
+
 export function OSEngine() {
-  const [phase, setPhase] =
-    useState<SystemPhase>("boot");
+  const [phase, setPhase] = useState<SystemPhase>("boot");
+
+  let screen: React.ReactNode = null;
 
   switch (phase) {
     case "boot":
-      return (
+      screen = (
         <BootEngine
           onComplete={() => setPhase("kernel")}
         />
       );
+      break;
 
     case "kernel":
-      return (
+      screen = (
         <KernelEngine
           onComplete={() => setPhase("countdown")}
         />
       );
+      break;
 
     case "countdown":
-      return (
+      screen = (
         <CountdownEngine
           start={3}
           onComplete={() => setPhase("access")}
         />
       );
+      break;
 
-      case "welcome":
-        return (
-          <WelcomeEngine
-            onComplete={() => setPhase("question")}
-          />
+    case "access":
+      screen = (
+        <AccessGrantedEngine
+          onComplete={() => setPhase("session")}
+        />
       );
-      case "access":
-          return (
-            <AccessGrantedEngine
-              onComplete={() => setPhase("session")}
-            />
-      );
-      case "session":
-            return (
-              <SessionEngine
-                onComplete={() => setPhase("welcome")}
-              />
-            );
-    
+      break;
 
-            case "question":
-              return (
-                <QuestionEngine
-                  onComplete={(answer) => {
-                    if (answer === "yes") {
-                      setPhase("about");
-                    } else {
-                      setPhase("desktop");
-                    }
-                  }}
-                />
-              );
+    case "session":
+      screen = (
+        <SessionEngine
+          onComplete={() => setPhase("welcome")}
+        />
+      );
+      break;
+
+    case "welcome":
+      screen = (
+        <WelcomeEngine
+          onComplete={() => setPhase("question")}
+        />
+      );
+      break;
+
+    case "question":
+      screen = (
+        <QuestionEngine
+          onComplete={(answer) => {
+            if (answer === "yes") {
+              setPhase("about");
+            } else {
+              setPhase("desktop");
+            }
+          }}
+        />
+      );
+      break;
+
     case "about":
-                return (
-                  <div className="flex h-screen items-center justify-center bg-black">
-                    <h1 className="font-mono text-5xl text-green-400">
-                      About Module
-                    </h1>
-                  </div>
-                );
-                case "desktop":
-                  return (
-                    <div className="flex h-screen items-center justify-center bg-black">
-                      <h1 className="font-mono text-5xl text-green-400">
-                        Desktop Module
-                      </h1>
-                    </div>
-                  );
+      screen = (
+        <div className="flex h-screen items-center justify-center bg-black">
+          <h1 className="font-mono text-5xl text-green-400">
+            About Module
+          </h1>
+        </div>
+      );
+      break;
+
+    case "desktop":
+      screen = (
+        <div className="flex h-screen items-center justify-center bg-black">
+          <h1 className="font-mono text-5xl text-green-400">
+            Desktop Module
+          </h1>
+        </div>
+      );
+      break;
+
     default:
-      return null;
+      screen = null;
   }
+
+  return (
+    <AnimatePresence mode="wait">
+      <ScreenTransition key={phase}>
+        {screen}
+      </ScreenTransition>
+    </AnimatePresence>
+  );
 }
