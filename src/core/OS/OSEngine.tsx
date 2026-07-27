@@ -62,10 +62,30 @@ export function OSEngine() {
               return (
                 <QuestionEngine
                   onComplete={(answer) => {
-                    console.log(answer);
+                    if (answer === "yes") {
+                      setPhase("about");
+                    } else {
+                      setPhase("desktop");
+                    }
                   }}
                 />
               );
+    case "about":
+                return (
+                  <div className="flex h-screen items-center justify-center bg-black">
+                    <h1 className="font-mono text-5xl text-green-400">
+                      About Module
+                    </h1>
+                  </div>
+                );
+                case "desktop":
+                  return (
+                    <div className="flex h-screen items-center justify-center bg-black">
+                      <h1 className="font-mono text-5xl text-green-400">
+                        Desktop Module
+                      </h1>
+                    </div>
+                  );
     default:
       return null;
   }
