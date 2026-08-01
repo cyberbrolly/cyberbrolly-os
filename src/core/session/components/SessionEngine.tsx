@@ -23,6 +23,7 @@ const [activeTask, setActiveTask] = useState(0);
     useEffect(() => {
       const totalTasks = sessionTasks.length;
       let progress = 0;
+      let completionTimeout: ReturnType<typeof setTimeout> | undefined;
     
       const interval = setInterval(() => {
         progress++;
@@ -41,14 +42,20 @@ const [activeTask, setActiveTask] = useState(0);
         if (progress >= 100) {
           clearInterval(interval);
     
-          setTimeout(() => {
+          completionTimeout = setTimeout(() => {
             onComplete();
           }, 700);
         }
       }, 35);
      
     
-      return () => clearInterval(interval);
+      return () => {
+        clearInterval(interval);
+
+        if (completionTimeout) {
+          clearTimeout(completionTimeout);
+        }
+      };
     }, [onComplete]);
 
   return (
@@ -87,11 +94,6 @@ const [activeTask, setActiveTask] = useState(0);
           })}
         </div>
 
-        {progress === 100 && (
-          <div className="mt-8 text-2xl font-bold">
-            <LoadingTask text="SESSION READY" />
-          </div>
-        )}
         {progress === 100 && <SessionReady />}
 
       </div>

@@ -1,6 +1,7 @@
 interface Props {
   selected: number;
   onSelect: (index: number) => void;
+  onComplete: (answer: "yes" | "skip") => void;
 }
 
 const options = ["YES", "SKIP"];
@@ -8,6 +9,7 @@ const options = ["YES", "SKIP"];
 export function QuestionScreen({
   selected,
   onSelect,
+  onComplete,
 }: Props) {
   return (
     <div className="flex h-screen items-center justify-center bg-black">
@@ -26,14 +28,18 @@ export function QuestionScreen({
         </p>
 
         {options.map((option, index) => (
-          <div
+          <button
+            type="button"
             key={option}
             onClick={() => onSelect(index)}
-            className="cursor-pointer text-2xl"
+            onDoubleClick={() =>
+              onComplete(index === 0 ? "yes" : "skip")
+            }
+            className="block cursor-pointer text-left text-2xl"
           >
             {selected === index ? "▶ " : "  "}
             {option}
-          </div>
+          </button>
         ))}
 
       </div>

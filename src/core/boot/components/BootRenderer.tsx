@@ -2,7 +2,6 @@
 
 import type { BootLine } from "../types/boot";
 import { BootLine as AnimatedBootLine } from "./BootLine";
-import { TextLine } from "./lines/TextLine";
 import { StatusLine } from "./lines/StatusLine";
 
 interface Props {

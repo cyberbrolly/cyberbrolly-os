@@ -1,3 +1,5 @@
+import type { BootLine } from "../../boot/types/boot";
+
 export const kernelSequence: BootLine[] = [
   {
     id: 1,

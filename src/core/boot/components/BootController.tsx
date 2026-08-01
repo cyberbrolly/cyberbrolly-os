@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-import type { BootLine } from '../types/boot';
 import { bootSequence } from '../data/bootSequence';
 import { BootScreen } from './BootScreen';
 

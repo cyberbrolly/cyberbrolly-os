@@ -37,6 +37,7 @@ export function QuestionEngine({ onComplete }: Props) {
     <QuestionScreen
       selected={selected}
       onSelect={setSelected}
+      onComplete={onComplete}
     />
   );
 }

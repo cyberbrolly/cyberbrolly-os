@@ -13,7 +13,7 @@ export function BootLine({
   onComplete,
 }: Props) {
   const output = useTypewriter(
-    line.text,
+    line.text ?? "",
     line.typingSpeed ?? 20,
     onComplete
   );

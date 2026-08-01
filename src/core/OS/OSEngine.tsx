@@ -12,8 +12,10 @@ import { AccessGrantedEngine } from "../access/components/AccessGrantedEngine";
 import { SessionEngine } from "../session/components/SessionEngine";
 import { WelcomeEngine } from "../welcome/components/WelcomeEngine";
 import { QuestionEngine } from "../question/components/QuestionEngine";
-
+import { DesktopEngine } from "../desktop/components/DesktopEngine";
 import { ScreenTransition } from "../shared/components/ScreenTransition";
+import { DeveloperIntroScreen } from "../desktop/components/DeveloperIntroScreen";
+
 
 export function OSEngine() {
   const [phase, setPhase] = useState<SystemPhase>("boot");
@@ -70,40 +72,43 @@ export function OSEngine() {
       );
       break;
 
-    case "question":
-      screen = (
-        <QuestionEngine
-          onComplete={(answer) => {
-            if (answer === "yes") {
-              setPhase("about");
-            } else {
-              setPhase("desktop");
-            }
-          }}
-        />
-      );
+      case "question":
+        screen = (
+          <QuestionEngine
+            onComplete={(answer) => {
+              if (answer === "yes") {
+                setPhase("about");
+              } else {
+                setPhase("desktop");
+              }
+            }}
+          />
+        );
       break;
-
-    case "about":
-      screen = (
-        <div className="flex h-screen items-center justify-center bg-black">
-          <h1 className="font-mono text-5xl text-green-400">
-            About Module
-          </h1>
-        </div>
-      );
+    
+      case "desktop":
+        screen = (
+          <DesktopEngine />
+        );
       break;
+    
+      case "about":
+        screen = (
+          <DeveloperIntroScreen
+            onComplete={() => setPhase("developer")}
+          />
+        );
+        break;
+      
+      case "developer":
+        screen = (
+          <DesktopEngine
+            initialWindow="about"
+          />
+        );
+        break;
 
-    case "desktop":
-      screen = (
-        <div className="flex h-screen items-center justify-center bg-black">
-          <h1 className="font-mono text-5xl text-green-400">
-            Desktop Module
-          </h1>
-        </div>
-      );
-      break;
-
+  
     default:
       screen = null;
   }

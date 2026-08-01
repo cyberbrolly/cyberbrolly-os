@@ -9,6 +9,11 @@ export function useTypewriter(
 ) {
   const [displayed, setDisplayed] = useState('');
   const finished = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     // Don't replay the animation once it's finished.
@@ -24,12 +29,11 @@ export function useTypewriter(
       if (index >= text.length) {
         clearInterval(interval);
         finished.current = true;
-        onComplete?.();
+        onCompleteRef.current?.();
       }
     }, speed);
 
     return () => clearInterval(interval);
-
   }, [text, speed]);
 
   return displayed;

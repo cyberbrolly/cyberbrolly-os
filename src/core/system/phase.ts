@@ -7,4 +7,5 @@ export type SystemPhase =
   | "welcome"
   | "question"
   | "about"
-  | "desktop";
+  | "desktop"
+  | "developer";

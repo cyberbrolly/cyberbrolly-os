@@ -1,8 +1,8 @@
-import { BootLine } from "../../boot/components/BootLine";
-import type { BootLine } from "../../boot/types/boot";
+import { BootLine as BootLineView } from "../../boot/components/BootLine";
+import type { BootLine as BootLineType } from "../../boot/types/boot";
 
 interface Props {
-  lines: BootLine[];
+  lines: BootLineType[];
   onLineComplete: () => void;
 }
 
@@ -15,7 +15,7 @@ export function AuthenticationScreen({
       <div className="font-mono text-2xl text-green-400 space-y-4">
 
         {lines.map((line, index) => (
-          <BootLine
+          <BootLineView
             key={line.id}
             line={line}
             onComplete={
