@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { SystemPhase } from "../system/phase";
 import { AnimatePresence } from "framer-motion";
 
+import { PowerOnEngine } from "../poweron/components/PowerOnEngine";
 import { BootEngine } from "../boot/components/BootEngine";
 import { KernelEngine } from "../kernel/components/KernelEngine";
 import { CountdownEngine } from "../countdown/components/CountdownEngine";
@@ -14,15 +15,24 @@ import { WelcomeEngine } from "../welcome/components/WelcomeEngine";
 import { QuestionEngine } from "../question/components/QuestionEngine";
 import { DesktopEngine } from "../desktop/components/DesktopEngine";
 import { ScreenTransition } from "../shared/components/ScreenTransition";
+import { AudioControl } from "../shared/components/AudioControl";
 import { DeveloperIntroScreen } from "../desktop/components/DeveloperIntroScreen";
 
 
 export function OSEngine() {
-  const [phase, setPhase] = useState<SystemPhase>("boot");
+  const [phase, setPhase] = useState<SystemPhase>("poweron");
 
   let screen: React.ReactNode = null;
 
   switch (phase) {
+    case "poweron":
+      screen = (
+        <PowerOnEngine
+          onComplete={() => setPhase("boot")}
+        />
+      );
+      break;
+
     case "boot":
       screen = (
         <BootEngine
@@ -114,10 +124,16 @@ export function OSEngine() {
   }
 
   return (
-    <AnimatePresence mode="wait">
-      <ScreenTransition key={phase}>
-        {screen}
-      </ScreenTransition>
-    </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait">
+        <ScreenTransition key={phase}>
+          {screen}
+        </ScreenTransition>
+      </AnimatePresence>
+
+      <div className="fixed right-3 top-3 z-[100]">
+        <AudioControl compact={phase !== "desktop" && phase !== "developer"} />
+      </div>
+    </>
   );
 }

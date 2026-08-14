@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import { desktopIcons } from "../data/desktopIcons";
@@ -14,6 +14,13 @@ import { Wallpaper } from "./Wallpaper";
 import { ProjectsApp } from "../apps/projects/components/ProjectsApp";
 import { ResumeApp } from "../apps/resume/components/ResumeApp";
 import { ContactApp } from "../apps/contact/ContactApp";
+import { useSound, type SoundType } from "../../shared/hooks/useSound";
+
+/** Apps that deserve a softer notification cue instead of plain window chrome. */
+const WINDOW_SOUNDS: Partial<Record<string, SoundType>> = {
+  resume: "notify",
+  contact: "notify",
+};
 
 interface Props {
   initialWindow?: string | null;
@@ -26,6 +33,11 @@ export function DesktopScreen({
     { id: string; z: number }[]
   >(() => (initialWindow ? [{ id: initialWindow, z: 999 }] : []));
   const [topZ, setTopZ] = useState(initialWindow ? 1000 : 1);
+  const { play } = useSound();
+
+  useEffect(() => {
+    play("login", 0.3);
+  }, [play]);
 
   return (
     <motion.div
@@ -82,6 +94,7 @@ export function DesktopScreen({
             title={window.id}
             index={index}
             zIndex={window.z}
+            openSound={WINDOW_SOUNDS[window.id] ?? "windowOpen"}
             onFocus={() => {
               setOpenWindows((prev) =>
                 prev.map((w) =>

@@ -1,7 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
+
+import { useSound, type SoundType } from "../../shared/hooks/useSound";
 
 interface Props {
   title: string;
@@ -10,6 +13,8 @@ interface Props {
   index: number;
   zIndex: number;
   onFocus: () => void;
+  /** Overridden by apps that deserve a more noticeable cue than window chrome. */
+  openSound?: SoundType;
 }
 
 export function Window({
@@ -19,7 +24,21 @@ export function Window({
   index,
   zIndex,
   onFocus,
+  openSound = "windowOpen",
 }: Props) {
+  const { play } = useSound();
+
+  // Mount rather than the click handler, so windows restored from
+  // `initialWindow` are announced too.
+  useEffect(() => {
+    play(openSound, 0.3);
+  }, [play, openSound]);
+
+  const handleClose = () => {
+    play("windowClose", 0.3);
+    onClose();
+  };
+
   return (
     <motion.div
       drag
@@ -40,7 +59,7 @@ export function Window({
 
         <button
           type="button"
-          onClick={onClose}
+          onClick={handleClose}
           className="font-mono text-red-400 hover:text-red-300"
         >
           ✕

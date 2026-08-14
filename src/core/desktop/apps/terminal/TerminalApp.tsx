@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState } from "react";
+import { useSound } from "../../../shared/hooks/useSound";
 
-import type { TerminalEntry } from "./data/TerminalEntry";
+import type { TerminalEntry } from "../../types/TerminalEntry";
 import { commands } from "./data/command";
 
 
@@ -12,6 +13,7 @@ export function TerminalApp() {
   const [history, setHistory] = useState<TerminalEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { play } = useSound();
 
   const commandHistory = history
     .filter((entry) => entry.type === "command")
@@ -21,24 +23,27 @@ export function TerminalApp() {
 
   const handleCommand = () => {
     const command = input.trim().toLowerCase();
-  
+
     if (!command) return;
-  
+
+    play('type', 0.15);
+
     // Clear command
     if (command === "clear") {
       setHistory([]);
       setInput("");
       return;
     }
-  
+
     const newHistory: TerminalEntry[] = [
       {
         type: "command",
         text: `cyberbrolly@devos:~$ ${command}`,
       },
     ];
-  
+
     if (commands[command]) {
+      play('beep', 0.2);
       commands[command].forEach((line) => {
         newHistory.push({
           type: "output",
@@ -46,12 +51,13 @@ export function TerminalApp() {
         });
       });
     } else {
+      play('error', 0.2);
       newHistory.push({
         type: "output",
         text: `Command not found: ${command}`,
       });
     }
-  
+
     setHistory((prev) => [...prev, ...newHistory]);
     setInput("");
   };
@@ -134,6 +140,14 @@ export function TerminalApp() {
                     commandHistory.length - 1 - nextIndex
                   ]
                 );
+              }
+
+              if (
+                event.key.length === 1 ||
+                event.key === "Backspace" ||
+                event.key === "Delete"
+              ) {
+                play("type", 0.13);
               }
             }}
             className="flex-1 bg-transparent text-green-400 caret-green-400 outline-none"          />

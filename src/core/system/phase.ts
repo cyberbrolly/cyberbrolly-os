@@ -1,4 +1,5 @@
 export type SystemPhase =
+  | "poweron"
   | "boot"
   | "kernel"
   | "countdown"

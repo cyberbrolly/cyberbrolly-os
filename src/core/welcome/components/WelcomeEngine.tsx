@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { welcomeWords } from '../data/welcomeWords';
+import { useSound } from '../../shared/hooks/useSound';
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
@@ -13,11 +14,17 @@ export function WelcomeEngine({
   onComplete,
 }: Props) {
   const [index, setIndex] = useState(0);
+  const { play } = useSound();
   const isAccessGranted =
     welcomeWords[index] === "ACCESS GRANTED";
 
   useEffect(() => {
-    if (index >= welcomeWords.length - 1) {
+    const isLast = index >= welcomeWords.length - 1;
+
+    // The closing word lands on a two-note lift; the rest tick past.
+    play(isLast ? 'notify' : 'blip', isLast ? 0.3 : 0.22);
+
+    if (isLast) {
       const timeout = setTimeout(onComplete, 1500);
       return () => clearTimeout(timeout);
     }
@@ -25,10 +32,10 @@ export function WelcomeEngine({
     const timeout = setTimeout(() => {
       setIndex((prev) => prev + 1);
     }, 1200);
-    
+
 
     return () => clearTimeout(timeout);
-  }, [index, onComplete]);
+  }, [index, onComplete, play]);
 
   return (
     <div className="flex h-screen items-center justify-center bg-black">

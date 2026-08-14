@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { useSound } from "../../shared/hooks/useSound";
+
 interface Props {
   onComplete: () => void;
 }
@@ -18,7 +20,7 @@ export function DeveloperIntroScreen({
   onComplete,
 }: Props) {
   const [visible, setVisible] = useState(0);
-  
+  const { play } = useSound();
 
   useEffect(() => {
     if (visible >= lines.length) {
@@ -27,11 +29,14 @@ export function DeveloperIntroScreen({
     }
 
     const timeout = setTimeout(() => {
+      // Fired here rather than on `visible` changing so the blip lands on the
+      // same frame as the line it belongs to.
+      play("blip", 0.3);
       setVisible((v) => v + 1);
     }, 600);
 
     return () => clearTimeout(timeout);
-  }, [visible, onComplete]);
+  }, [visible, onComplete, play]);
 
   return (
     <div className="flex h-screen items-center justify-center bg-black">

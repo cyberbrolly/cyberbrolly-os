@@ -20,7 +20,7 @@ export const projects: Project[] = [
   {
     title: "EventInbox",
     description:
-      "AI-powered developer marketing platform for launching content across Hashnode, Dev.to, Reddit, Hacker News, and social media with a developer-first brand voice and automated publishing workflows.",
+      "EventInbox is a webhook infrastructure delivery system built to reliably deliver events through configurable endpoints — giving developers a dependable way to route, track, and manage event notifications between services without having to build and maintain that plumbing themselves.",
     image: "/images/projects/eventinbox.png",
     stack: [
       "Next.js",
