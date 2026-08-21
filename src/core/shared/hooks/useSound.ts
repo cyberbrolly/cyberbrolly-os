@@ -12,6 +12,8 @@ export type SoundType =
   | 'blip'
   | 'notify'
   | 'transition'
+  | 'kernelScan'
+  | 'click'
   // Synthesized — tiny UI feedback only.
   | 'type'
   | 'beep'
@@ -41,6 +43,8 @@ const PROFILES: Record<SoundType, SoundProfile> = {
   blip: { category: 'interface', gain: 0.42, cooldown: 35, maxVoices: 2 },
   notify: { category: 'feedback', gain: 0.68, cooldown: 160, maxVoices: 2 },
   transition: { category: 'transition', gain: 0.72, cooldown: 180, maxVoices: 1 },
+  kernelScan: { category: 'ambience', gain: 0.58, cooldown: 1200, maxVoices: 1 },
+  click: { category: 'interface', gain: 0.5, cooldown: 35, maxVoices: 2 },
   type: { category: 'terminal', gain: 0.34, cooldown: 22, maxVoices: 2 },
   beep: { category: 'feedback', gain: 0.55, cooldown: 80, maxVoices: 2 },
   error: { category: 'feedback', gain: 0.58, cooldown: 180, maxVoices: 1 },
@@ -81,6 +85,8 @@ const SAMPLES: Partial<Record<SoundType, string>> = {
   blip: '/sounds/intro-tick.wav',
   notify: '/sounds/notify.wav',
   transition: '/sounds/transition.wav',
+  kernelScan: '/sounds/kernel-scan.wav',
+  click: '/sounds/ui-click.wav',
 };
 
 /**

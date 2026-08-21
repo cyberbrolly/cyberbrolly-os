@@ -467,6 +467,29 @@ function introTick() {
   return normalize(edges(out, 0.0004, 0.012), 0.34);
 }
 
+function kernelScan() {
+  const length = 1.8;
+  const out = buffer(length);
+  const interval = 0.075;
+
+  for (let offset = 0; offset < length; offset += interval) {
+    const tick = relayClick(0x6200 + Math.round(offset * 1000), {
+      hz: 1900 + ((Math.round(offset / interval) % 3) * 180),
+      decay: 0.006,
+      q: 3.6,
+    });
+    mix(out, tick, 0.62, offset);
+  }
+
+  return normalize(edges(lowpass(out, 5200, 0.7), 0.002, 0.012), 0.48);
+}
+
+function uiClick() {
+  const out = buffer(0.009);
+  mix(out, relayClick(0x91e2, { hz: 3000, decay: 0.0018, q: 4.2 }), 0.82);
+  return normalize(edges(highpass(out, 900, 0.8), 0.0001, 0.002), 0.42);
+}
+
 /**
  * Desktop login. Replaces a literal C-E-G major chord. Now: a low sub arrival,
  * a filtered noise rise, and two soft relays — the OS settling, not a jingle.
@@ -585,6 +608,8 @@ const SOUNDS = {
   'window-open': windowOpen,
   'window-close': windowClose,
   'intro-tick': introTick,
+  'kernel-scan': kernelScan,
+  'ui-click': uiClick,
   login,
   notify,
   transition,
@@ -626,4 +651,3 @@ for (const [name, render] of Object.entries(SOUNDS)) {
 }
 
 console.log(`\n${Object.keys(SOUNDS).length} files written to public/sounds/`);
-
