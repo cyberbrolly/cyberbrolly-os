@@ -75,10 +75,10 @@ const [activeTask, setActiveTask] = useState(0);
     }, [onComplete, play]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-black">
-      <div className="w-[700px] font-mono text-green-400">
+    <div className="flex h-dvh items-center justify-center overflow-x-hidden bg-black px-4 md:h-screen">
+      <div className="w-full max-w-[700px] min-w-0 break-all font-mono text-sm text-green-400 md:text-base">
 
-        <h1 className="mb-6 text-4xl">
+        <h1 className="mb-6 text-2xl md:text-4xl">
           INITIALIZING USER SESSION...
         </h1>
 

@@ -50,19 +50,19 @@ export function MobileDesktopScreen({ initialWindow = null }: { initialWindow?: 
   };
 
   return (
-    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 flex flex-col bg-[#0b0f14] font-mono text-green-400">
+    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 flex min-w-0 flex-col overflow-x-hidden bg-[#0b0f14] pb-[env(safe-area-inset-bottom)] font-mono text-green-400 pt-[env(safe-area-inset-top)]">
       {activeApp ? (
         <>
-          <header className="flex h-12 shrink-0 items-center border-b border-green-500/20 bg-black/50 px-4 backdrop-blur-xl">
+          <header className="flex h-12 shrink-0 items-center border-b border-green-500/20 bg-black/50 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))] backdrop-blur-xl">
             <button type="button" onClick={closeApp} className="text-sm text-green-300">← Home</button>
             <span className="mx-auto text-sm uppercase tracking-widest">{activeApp}</span>
           </header>
-          <section className="min-h-0 flex-1 overflow-y-auto p-5 pb-16">
+          <section className="min-h-0 min-w-0 flex-1 overflow-y-auto pt-5 pr-[max(1.25rem,env(safe-area-inset-right))] pb-16 pl-[max(1.25rem,env(safe-area-inset-left))] [&_input]:min-w-0">
             {(() => { const App = appComponents[activeApp]; return App ? <App /> : null; })()}
           </section>
         </>
       ) : (
-        <section className="min-h-0 flex-1 overflow-y-auto p-4 pb-16">
+        <section className="min-h-0 min-w-0 flex-1 overflow-y-auto pt-4 pr-[max(1rem,env(safe-area-inset-right))] pb-16 pl-[max(1rem,env(safe-area-inset-left))]">
           <div className="mb-6 pt-5"><p className="text-xs uppercase tracking-[0.3em] text-green-500/70">DevOS</p><h1 className="mt-2 text-2xl font-bold">Applications</h1></div>
           <div className="space-y-3">
             {desktopIcons.map((icon) => (
@@ -74,7 +74,7 @@ export function MobileDesktopScreen({ initialWindow = null }: { initialWindow?: 
           </div>
         </section>
       )}
-      <nav className="fixed bottom-0 left-0 right-0 flex h-11 items-center justify-between border-t border-green-500/20 bg-black/60 px-4 backdrop-blur-xl">
+      <nav className="fixed right-0 bottom-0 left-0 flex min-h-11 items-center justify-between border-t border-green-500/20 bg-black/60 pr-[max(1rem,env(safe-area-inset-right))] pb-[env(safe-area-inset-bottom)] pl-[max(1rem,env(safe-area-inset-left))] backdrop-blur-xl">
         <button type="button" onClick={activeApp ? closeApp : undefined} className="text-sm text-green-300">{activeApp ? '← Back' : '⌂ Home'}</button>
         <Clock />
       </nav>
