@@ -1,4 +1,6 @@
 import { DesktopScreen } from "./DesktopScreen";
+import { MobileDesktopScreen } from "./MobileDesktopScreen";
+import { useIsMobile } from "../../shared/hooks/useIsMobile";
 
 interface Props {
   initialWindow?: string | null;
@@ -7,7 +9,10 @@ interface Props {
 export function DesktopEngine({
   initialWindow = null,
 }: Props) {
-  return (
+  const isMobile = useIsMobile();
+  return isMobile ? (
+    <MobileDesktopScreen initialWindow={initialWindow} />
+  ) : (
     <DesktopScreen
       initialWindow={initialWindow}
     />

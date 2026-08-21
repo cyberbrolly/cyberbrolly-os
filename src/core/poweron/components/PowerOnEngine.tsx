@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { unlockAudio } from '../../shared/hooks/useSound';
+import { useIsMobile } from '../../shared/hooks/useIsMobile';
 
 interface Props {
   onComplete: () => void;
@@ -19,6 +20,7 @@ interface Props {
  */
 export function PowerOnEngine({ onComplete }: Props) {
   const [poweringOn, setPoweringOn] = useState(false);
+  const isMobile = useIsMobile();
 
   /**
    * A keypress on the focused button raises both `click` and `keydown`, so the
@@ -56,6 +58,7 @@ export function PowerOnEngine({ onComplete }: Props) {
       type="button"
       autoFocus
       onClick={powerOn}
+      onTouchStart={powerOn}
       aria-label="Power on CyberBrolly DevOS"
       className="flex h-screen w-screen cursor-pointer items-center justify-center bg-black"
     >
@@ -74,7 +77,9 @@ export function PowerOnEngine({ onComplete }: Props) {
         >
           {poweringOn
             ? 'POWERING ON...'
-            : 'PRESS ANY KEY TO POWER ON'}
+            : isMobile
+              ? 'TAP TO POWER ON'
+              : 'PRESS ANY KEY TO POWER ON'}
         </p>
 
       </div>
