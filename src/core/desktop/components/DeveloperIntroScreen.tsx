@@ -39,9 +39,9 @@ export function DeveloperIntroScreen({
   }, [visible, onComplete, play]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-black">
-      <div className="w-[700px] font-mono text-green-400">
-        <h1 className="mb-8 text-3xl">
+    <div className="flex h-dvh items-center justify-center overflow-x-hidden bg-black px-4 md:h-screen">
+      <div className="w-full max-w-[700px] min-w-0 font-mono text-green-400">
+        <h1 className="mb-8 text-2xl md:text-3xl">
           Developer Profile
         </h1>
 

@@ -131,7 +131,7 @@ export function OSEngine() {
         </ScreenTransition>
       </AnimatePresence>
 
-      <div className="fixed right-3 top-3 z-[100]">
+      <div className="fixed top-3 right-[max(0.75rem,env(safe-area-inset-right))] z-[100]">
         <AudioControl compact={phase !== "desktop" && phase !== "developer"} />
       </div>
     </>
