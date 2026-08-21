@@ -31,11 +31,11 @@ export function QuestionScreen({
           <button
             type="button"
             key={option}
-            onClick={() => onSelect(index)}
-            onDoubleClick={() =>
-              onComplete(index === 0 ? "yes" : "skip")
-            }
-            className="block cursor-pointer text-left text-2xl"
+            onClick={() => {
+              onSelect(index);
+              onComplete(index === 0 ? "yes" : "skip");
+            }}
+            className="block min-h-11 min-w-44 touch-manipulation cursor-pointer text-left text-2xl"
           >
             {selected === index ? "▶ " : "  "}
             {option}
