@@ -44,8 +44,8 @@ export function CountdownEngine({
   }, [count, onComplete, play]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-black">
-      <h1 className="font-mono text-9xl font-bold text-green-400">
+    <div className="flex h-dvh items-center justify-center overflow-x-hidden bg-black md:h-screen">
+      <h1 className="font-mono text-8xl font-bold text-green-400 md:text-9xl">
         {count}
       </h1>
     </div>

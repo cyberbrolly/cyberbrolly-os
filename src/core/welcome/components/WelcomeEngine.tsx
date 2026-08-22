@@ -38,7 +38,7 @@ export function WelcomeEngine({
   }, [index, onComplete, play]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-black">
+    <div className="flex h-dvh items-center justify-center overflow-x-hidden bg-black px-4 md:h-screen">
       <AnimatePresence mode="wait">
         <motion.h1
           key={welcomeWords[index]}
@@ -60,7 +60,7 @@ export function WelcomeEngine({
           transition={{
             duration: 0.6,
           }}
-          className="font-mono text-7xl font-bold tracking-[0.4em] text-green-400 neon-text"
+          className="max-w-full text-center font-mono text-4xl font-bold tracking-[0.18em] text-green-400 neon-text md:text-7xl md:tracking-[0.4em]"
         >
           {welcomeWords[index]}
         </motion.h1>
