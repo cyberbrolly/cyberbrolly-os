@@ -1,5 +1,10 @@
 import { OSEngine } from "@/core/OS/OSEngine";
+import { ErrorBoundary } from "@/core/shared/components/ErrorBoundary";
 
 export default function Home() {
-  return <OSEngine />;
+  return (
+    <ErrorBoundary>
+      <OSEngine />
+    </ErrorBoundary>
+  );
 }
