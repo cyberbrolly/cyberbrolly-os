@@ -25,13 +25,23 @@ export function OSEngine() {
   const [phase, setPhase] = useState<SystemPhase>("poweron");
   const isMobile = useIsMobile();
 
+  // useIsMobile hydrates after mount; read the query at the gesture boundary
+  // as well so a very fast first tap cannot enter the desktop boot narrative.
+  const completePowerOn = () => {
+    const mobileViewport =
+      isMobile ||
+      (typeof window !== "undefined" &&
+        window.matchMedia("(max-width: 767px)").matches);
+    setPhase(mobileViewport ? "mobileBoot" : "boot");
+  };
+
   let screen: React.ReactNode = null;
 
   switch (phase) {
     case "poweron":
       screen = (
         <PowerOnEngine
-          onComplete={() => setPhase(isMobile ? "mobileBoot" : "boot")}
+          onComplete={completePowerOn}
         />
       );
       break;
