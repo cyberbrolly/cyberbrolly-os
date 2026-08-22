@@ -12,18 +12,18 @@ export function QuestionScreen({
   onComplete,
 }: Props) {
   return (
-    <div className="flex h-screen items-center justify-center bg-black">
-      <div className="font-mono text-green-400">
+    <div className="flex h-dvh items-center justify-center overflow-x-hidden bg-black px-4 md:h-screen">
+      <div className="min-w-0 max-w-full font-mono text-green-400">
 
-        <h1 className="mb-3 text-3xl">
+        <h1 className="mb-4 text-3xl leading-tight md:mb-3 md:text-3xl md:leading-normal">
           CyberBrolly DevOS v16
         </h1>
 
-        <p className="mb-8">
+        <p className="mb-9 text-lg leading-7 md:mb-8 md:text-base md:leading-normal">
           System Ready.
         </p>
 
-        <p className="mb-8">
+        <p className="mb-9 text-lg leading-7 md:mb-8 md:text-base md:leading-normal">
           &gt; Would you like to know who built this system?
         </p>
 

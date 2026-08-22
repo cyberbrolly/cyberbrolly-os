@@ -60,18 +60,18 @@ export function PowerOnEngine({ onComplete }: Props) {
       onClick={powerOn}
       onTouchStart={powerOn}
       aria-label="Power on CyberBrolly DevOS"
-      className="flex h-screen w-screen cursor-pointer items-center justify-center bg-black"
+      className="flex h-dvh w-full cursor-pointer items-center justify-center overflow-x-hidden bg-black px-4 md:h-screen"
     >
       <div className="font-mono text-green-400">
 
         <div className="mb-10 border-2 border-green-400 px-10 py-6">
-          <h1 className="neon-text text-5xl font-bold tracking-[0.3em]">
+          <h1 className="neon-text text-5xl font-bold tracking-[0.2em] md:text-5xl md:tracking-[0.3em]">
             DEVOS
           </h1>
         </div>
 
         <p
-          className={`text-center text-lg tracking-[0.2em] ${
+          className={`text-center text-xl leading-8 tracking-[0.2em] md:text-lg md:leading-normal ${
             poweringOn ? '' : 'animate-pulse'
           }`}
         >
