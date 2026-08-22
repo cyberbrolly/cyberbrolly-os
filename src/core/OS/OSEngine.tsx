@@ -6,6 +6,7 @@ import type { SystemPhase } from "../system/phase";
 import { AnimatePresence } from "framer-motion";
 
 import { PowerOnEngine } from "../poweron/components/PowerOnEngine";
+import { MobileBootSequence } from "../boot/components/MobileBootSequence";
 import { BootEngine } from "../boot/components/BootEngine";
 import { KernelEngine } from "../kernel/components/KernelEngine";
 import { CountdownEngine } from "../countdown/components/CountdownEngine";
@@ -17,10 +18,12 @@ import { DesktopEngine } from "../desktop/components/DesktopEngine";
 import { ScreenTransition } from "../shared/components/ScreenTransition";
 import { AudioControl } from "../shared/components/AudioControl";
 import { DeveloperIntroScreen } from "../desktop/components/DeveloperIntroScreen";
+import { useIsMobile } from "../shared/hooks/useIsMobile";
 
 
 export function OSEngine() {
   const [phase, setPhase] = useState<SystemPhase>("poweron");
+  const isMobile = useIsMobile();
 
   let screen: React.ReactNode = null;
 
@@ -28,9 +31,13 @@ export function OSEngine() {
     case "poweron":
       screen = (
         <PowerOnEngine
-          onComplete={() => setPhase("boot")}
+          onComplete={() => setPhase(isMobile ? "mobileBoot" : "boot")}
         />
       );
+      break;
+
+    case "mobileBoot":
+      screen = <MobileBootSequence onComplete={() => setPhase("desktop")} />;
       break;
 
     case "boot":
