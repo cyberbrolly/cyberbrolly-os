@@ -1,20 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import { desktopIcons } from "../data/desktopIcons";
+import { AppContent } from "../apps/AppContent";
 import { DesktopIcon } from "./DesktopIcon";
 import { Window } from "./Window";
 import { Taskbar } from "./Taskbar";
-
-import { AboutApp } from ".././apps/about/AboutApp";
-import { TerminalApp } from ".././apps/terminal/TerminalApp";
 import { Wallpaper } from "./Wallpaper";
-import { ProjectsApp } from "../apps/projects/components/ProjectsApp";
-import { ResumeApp } from "../apps/resume/components/ResumeApp";
-import { ContactApp } from "../apps/contact/ContactApp";
-import { useSound, type SoundType } from "../../shared/hooks/useSound";
+import type { SoundType } from "../../shared/hooks/useSound";
+import type { OpenWindow } from "./DesktopEngine";
 
 /** Apps that deserve a softer notification cue instead of plain window chrome. */
 const WINDOW_SOUNDS: Partial<Record<string, SoundType>> = {
@@ -23,22 +18,18 @@ const WINDOW_SOUNDS: Partial<Record<string, SoundType>> = {
 };
 
 interface Props {
-  initialWindow?: string | null;
+  openWindows: OpenWindow[];
+  onOpenApp: (appId: string) => void;
+  onFocusWindow: (appId: string) => void;
+  onCloseWindow: (appId: string) => void;
 }
 
 export function DesktopScreen({
-  initialWindow = null,
+  openWindows,
+  onOpenApp,
+  onFocusWindow,
+  onCloseWindow,
 }: Props) {
-  const [openWindows, setOpenWindows] = useState<
-    { id: string; z: number }[]
-  >(() => (initialWindow ? [{ id: initialWindow, z: 999 }] : []));
-  const [topZ, setTopZ] = useState(initialWindow ? 1000 : 1);
-  const { play } = useSound();
-
-  useEffect(() => {
-    play("login", 0.3);
-  }, [play]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -66,23 +57,7 @@ export function DesktopScreen({
               key={icon.id}
               icon={icon.icon}
               label={icon.label}
-              onClick={() => {
-                setOpenWindows((prev) => {
-                  if (prev.some((w) => w.id === icon.app)) {
-                    return prev;
-                  }
-
-                  return [
-                    ...prev,
-                    {
-                      id: icon.app,
-                      z: topZ,
-                    },
-                  ];
-                });
-
-                setTopZ((z) => z + 1);
-              }}
+              onClick={() => onOpenApp(icon.app)}
             />
           ))}
         </div>
@@ -95,36 +70,10 @@ export function DesktopScreen({
             index={index}
             zIndex={window.z}
             openSound={WINDOW_SOUNDS[window.id] ?? "windowOpen"}
-            onFocus={() => {
-              setOpenWindows((prev) =>
-                prev.map((w) =>
-                  w.id === window.id
-                    ? { ...w, z: topZ }
-                    : w,
-                ),
-              );
-
-              setTopZ((z) => z + 1);
-            }}
-            onClose={() =>
-              setOpenWindows((prev) => prev.filter((w) => w.id !== window.id))
-            }
+            onFocus={() => onFocusWindow(window.id)}
+            onClose={() => onCloseWindow(window.id)}
           >
-            {window.id === "about" ? (
-              <AboutApp />
-            ) : window.id === "terminal" ? (
-              <TerminalApp />
-            ) : window.id === "projects" ? (
-              <ProjectsApp />
-            ) : window.id === "resume" ? (
-              <ResumeApp />
-            ) : window.id === "contact" ? (
-              <ContactApp />
-            ) : (
-              <div className="font-mono text-green-400">
-                {window.id} application
-              </div>
-            )}
+            <AppContent appId={window.id} />
           </Window>
         ))}
 
