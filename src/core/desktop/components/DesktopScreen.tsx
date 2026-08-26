@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 
 import { desktopIcons } from "../data/desktopIcons";
@@ -34,6 +35,8 @@ export function DesktopScreen({
   onFocusWindow,
   onCloseWindow,
 }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -53,7 +56,10 @@ export function DesktopScreen({
         <p className="mt-2 text-green-500">Mobile view coming soon.</p>
       </div>
 
-      <div className="relative z-10 hidden h-full flex-col md:flex">
+      <div
+        ref={containerRef}
+        className="relative z-10 hidden h-full flex-col md:flex"
+      >
         {/* Desktop */}
         <div className="grid grid-cols-1 gap-6 p-6">
           {desktopIcons.map((icon) => (
@@ -74,6 +80,7 @@ export function DesktopScreen({
             x={window.x}
             y={window.y}
             zIndex={window.z}
+            containerRef={containerRef}
             openSound={WINDOW_SOUNDS[window.id] ?? "windowOpen"}
             onFocus={() => onFocusWindow(window.id)}
             onClose={() => onCloseWindow(window.id)}

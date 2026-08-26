@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 
@@ -13,6 +13,7 @@ interface Props {
   x: number;
   y: number;
   zIndex: number;
+  containerRef: RefObject<HTMLDivElement | null>;
   onFocus: () => void;
   /** Overridden by apps that deserve a more noticeable cue than window chrome. */
   openSound?: SoundType;
@@ -25,6 +26,7 @@ export function Window({
   x,
   y,
   zIndex,
+  containerRef,
   onFocus,
   openSound = "windowOpen",
 }: Props) {
@@ -44,6 +46,8 @@ export function Window({
   return (
     <motion.div
       drag
+      dragConstraints={containerRef}
+      dragElastic={0}
       dragMomentum={false}
       onMouseDown={onFocus}
       initial={{ opacity: 0, scale: 0.95, y: 8 }}
