@@ -17,6 +17,10 @@ const WINDOW_SOUNDS: Partial<Record<string, SoundType>> = {
   contact: "notify",
 };
 
+function getWindowLabel(appId: string): string {
+  return desktopIcons.find((icon) => icon.app === appId)?.label ?? appId;
+}
+
 interface Props {
   openWindows: OpenWindow[];
   onOpenApp: (appId: string) => void;
@@ -66,7 +70,7 @@ export function DesktopScreen({
         {openWindows.map((window) => (
           <Window
             key={window.id}
-            title={window.id}
+            title={getWindowLabel(window.id)}
             x={window.x}
             y={window.y}
             zIndex={window.z}
