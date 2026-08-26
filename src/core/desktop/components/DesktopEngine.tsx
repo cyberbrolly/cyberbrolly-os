@@ -85,6 +85,8 @@ export function DesktopEngine({
     [openWindows],
   );
 
+  if (isMobile === null) return null;
+
   return isMobile ? (
     <MobileDesktopScreen
       openWindows={openWindows}
