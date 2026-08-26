@@ -10,7 +10,8 @@ interface Props {
   title: string;
   children: ReactNode;
   onClose: () => void;
-  index: number;
+  x: number;
+  y: number;
   zIndex: number;
   onFocus: () => void;
   /** Overridden by apps that deserve a more noticeable cue than window chrome. */
@@ -21,7 +22,8 @@ export function Window({
   title,
   children,
   onClose,
-  index,
+  x,
+  y,
   zIndex,
   onFocus,
   openSound = "windowOpen",
@@ -49,8 +51,8 @@ export function Window({
       exit={{ opacity: 0, scale: 0.95, y: 8 }}
       className="absolute flex h-[560px] w-[700px] flex-col rounded-lg border border-green-500/30 bg-[#0f1419] shadow-2xl"
       style={{
-        left: 180 + index * 40,
-        top: 80 + index * 30,
+        left: x,
+        top: y,
         zIndex,
       }}
     >

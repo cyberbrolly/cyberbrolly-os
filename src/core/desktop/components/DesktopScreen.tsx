@@ -63,11 +63,12 @@ export function DesktopScreen({
         </div>
 
         {/* Window */}
-        {openWindows.map((window, index) => (
+        {openWindows.map((window) => (
           <Window
             key={window.id}
             title={window.id}
-            index={index}
+            x={window.x}
+            y={window.y}
             zIndex={window.z}
             openSound={WINDOW_SOUNDS[window.id] ?? "windowOpen"}
             onFocus={() => onFocusWindow(window.id)}

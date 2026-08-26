@@ -10,6 +10,8 @@ import { useIsMobile } from "../../shared/hooks/useIsMobile";
 export interface OpenWindow {
   id: string;
   z: number;
+  x: number;
+  y: number;
 }
 
 interface Props {
@@ -21,7 +23,7 @@ export function DesktopEngine({
 }: Props) {
   const isMobile = useIsMobile();
   const [openWindows, setOpenWindows] = useState<OpenWindow[]>(() =>
-    initialWindow ? [{ id: initialWindow, z: 999 }] : [],
+    initialWindow ? [{ id: initialWindow, z: 999, x: 180, y: 80 }] : [],
   );
   const [topZ, setTopZ] = useState(initialWindow ? 1000 : 1);
   const { play } = useSound();
@@ -41,7 +43,15 @@ export function DesktopEngine({
           );
         }
 
-        return [...windows, { id: appId, z: topZ }];
+        return [
+          ...windows,
+          {
+            id: appId,
+            z: topZ,
+            x: 180 + windows.length * 40,
+            y: 80 + windows.length * 30,
+          },
+        ];
       });
       setTopZ((z) => z + 1);
     },
