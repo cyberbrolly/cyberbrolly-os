@@ -48,14 +48,6 @@ export function DesktopScreen({
 
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-center p-8 text-center font-mono text-green-400 md:hidden">
-        <h1 className="text-2xl font-bold">DevOS is designed for desktop.</h1>
-        <p className="mt-4 max-w-md text-green-300">
-          For the best experience, please visit on a laptop or desktop computer.
-        </p>
-        <p className="mt-2 text-green-500">Mobile view coming soon.</p>
-      </div>
-
       <div
         ref={containerRef}
         className="relative z-10 hidden h-full flex-col md:flex"

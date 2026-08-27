@@ -22,11 +22,16 @@ export function DesktopEngine({
   initialWindow = null,
 }: Props) {
   const isMobile = useIsMobile();
+  const [hasMounted, setHasMounted] = useState(false);
   const [openWindows, setOpenWindows] = useState<OpenWindow[]>(() =>
     initialWindow ? [{ id: initialWindow, z: 999, x: 180, y: 80 }] : [],
   );
   const [topZ, setTopZ] = useState(initialWindow ? 1000 : 1);
   const { play } = useSound();
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     play("login", 0.3);
@@ -85,7 +90,7 @@ export function DesktopEngine({
     [openWindows],
   );
 
-  if (isMobile === null) return null;
+  if (!hasMounted || isMobile === null) return null;
 
   return isMobile ? (
     <MobileDesktopScreen
