@@ -17,6 +17,7 @@ import { QuestionEngine } from "../question/components/QuestionEngine";
 import { DesktopEngine } from "../desktop/components/DesktopEngine";
 import { ScreenTransition } from "../shared/components/ScreenTransition";
 import { AudioControl } from "../shared/components/AudioControl";
+import { ErrorBoundary } from "../shared/components/ErrorBoundary";
 import { DeveloperIntroScreen } from "../desktop/components/DeveloperIntroScreen";
 import { useIsMobile } from "../shared/hooks/useIsMobile";
 
@@ -142,11 +143,13 @@ export function OSEngine() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        <ScreenTransition key={phase}>
-          {screen}
-        </ScreenTransition>
-      </AnimatePresence>
+      <ErrorBoundary>
+        <AnimatePresence mode="wait">
+          <ScreenTransition key={phase}>
+            {screen}
+          </ScreenTransition>
+        </AnimatePresence>
+      </ErrorBoundary>
 
       <div className="fixed top-3 right-[max(0.75rem,env(safe-area-inset-right))] z-[100]">
         <AudioControl compact={phase !== "desktop" && phase !== "developer"} />

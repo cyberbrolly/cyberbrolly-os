@@ -30,6 +30,8 @@ export function DesktopEngine({
   const { play } = useSound();
 
   useEffect(() => {
+    // This gate intentionally waits for client hydration before choosing a viewport UI.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasMounted(true);
   }, []);
 

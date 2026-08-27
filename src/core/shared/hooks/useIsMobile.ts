@@ -12,11 +12,20 @@ export function useIsMobile() {
     const update = () => setIsMobile(mediaQuery.matches);
 
     update();
-    mediaQuery.addEventListener('change', update);
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', update);
+    } else {
+      mediaQuery.addListener(update);
+    }
     window.addEventListener('resize', update);
 
     return () => {
-      mediaQuery.removeEventListener('change', update);
+      if (typeof mediaQuery.removeEventListener === 'function') {
+        mediaQuery.removeEventListener('change', update);
+      } else {
+        mediaQuery.removeListener(update);
+      }
       window.removeEventListener('resize', update);
     };
   }, []);
