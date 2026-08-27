@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { SystemPhase } from "../system/phase";
 import { AnimatePresence } from "framer-motion";
@@ -25,6 +25,31 @@ import { useIsMobile } from "../shared/hooks/useIsMobile";
 export function OSEngine() {
   const [phase, setPhase] = useState<SystemPhase>("poweron");
   const isMobile = useIsMobile();
+
+  // TEMP DIAGNOSTIC — remove after iOS blank-screen root cause is found
+  useEffect(() => {
+    function showError(message: string) {
+      const el = document.createElement('pre');
+      el.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#000;color:#0f0;font:12px monospace;padding:16px;overflow:auto;white-space:pre-wrap;';
+      el.textContent = message;
+      document.body.appendChild(el);
+    }
+
+    const onError = (event: ErrorEvent) => {
+      showError(`window.onerror:\n${event.message}\n${event.error?.stack ?? ''}`);
+    };
+    const onRejection = (event: PromiseRejectionEvent) => {
+      showError(`unhandledrejection:\n${String(event.reason?.message ?? event.reason)}\n${event.reason?.stack ?? ''}`);
+    };
+
+    window.addEventListener('error', onError);
+    window.addEventListener('unhandledrejection', onRejection);
+
+    return () => {
+      window.removeEventListener('error', onError);
+      window.removeEventListener('unhandledrejection', onRejection);
+    };
+  }, []);
 
   // useIsMobile hydrates after mount; read the query at the gesture boundary
   // as well so a very fast first tap cannot enter the desktop boot narrative.
