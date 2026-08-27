@@ -10,12 +10,14 @@ export function ProgressBar({ onComplete }: Props) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    let completionTimeout: ReturnType<typeof setTimeout> | undefined;
+
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
 
-          setTimeout(onComplete, 400);
+          completionTimeout = setTimeout(onComplete, 400);
 
           return 100;
         }
@@ -24,7 +26,10 @@ export function ProgressBar({ onComplete }: Props) {
       });
     }, 45);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (completionTimeout) clearTimeout(completionTimeout);
+    };
   }, [onComplete]);
 
   const filled = Math.floor(progress / 5);
