@@ -18,6 +18,7 @@ export function AboutApp() {
         systems with a focus on performance,
         clean architecture and great user
         experiences.
+        I also deal with backend and api integration.
       </p>
 
       <div>
@@ -26,11 +27,13 @@ export function AboutApp() {
         </h2>
 
         <ul className="space-y-1">
+          <li>• Rust</li>
           <li>• React</li>
           <li>• Next.js</li>
           <li>• TypeScript</li>
           <li>• Node.js</li>
           <li>• Tailwind CSS</li>
+          
         </ul>
       </div>
 
