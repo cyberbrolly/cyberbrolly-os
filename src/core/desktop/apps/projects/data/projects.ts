@@ -26,27 +26,12 @@ export const projects: Project[] = [
       "Next.js",
       "TypeScript",
       "Tailwind CSS",
-      "AI",
-      "Marketing Automation",
+      "Go"
     ],
-    github: "#",
-    demo: "#",
+    github: "https://github.com/Eventinbox",
+    demo: "eventinbox.pro",
   },
 
-  {
-    title: "Forge",
-    description:
-      "AI engineering control center rebuilt in Next.js using the Anthropic SDK. Designed as a workspace for managing AI engineering workflows with Claude integration.",
-    image: "/images/projects/forge.png",
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Anthropic SDK",
-      "React",
-    ],
-    github: "#",
-    demo: "#",
-  },
 
   {
     title: "Sales Voice",
@@ -62,26 +47,11 @@ export const projects: Project[] = [
       "SQLite",
       "Gemma 4",
     ],
-    github: "#",
-    demo: "#",
+    github: "private",
+    demo: "none",
   },
 
-  {
-    title: "NullPaste",
-    description:
-      "Cyberpunk-inspired team identity platform combining a developer directory with a high-fidelity animated landing page focused on premium UI, branding, and WebGL experiences.",
-    image: "/images/projects/nullpaste.png",
-    stack: [
-      "Next.js 14",
-      "TypeScript",
-      "Three.js",
-      "WebGL",
-      "Prisma",
-      "PostgreSQL",
-    ],
-    github: "#",
-    demo: "#",
-  },
+
 
   {
     title: "Threadline",
@@ -93,7 +63,7 @@ export const projects: Project[] = [
       "TypeScript",
       "Zustand",
     ],
-    github: "#",
+    github: "https://github.com/cyberbrolly/Threadline",
     demo: "https://threadline-seven-pink.vercel.app",
   },
 
@@ -108,7 +78,7 @@ export const projects: Project[] = [
       "Python",
       "Render",
     ],
-    github: "#",
+    github: "https://github.com/cyberbrolly/Neural-Dash",
     demo: "#",
   },
 
@@ -124,20 +94,5 @@ export const projects: Project[] = [
       "Alpha-Beta Pruning",
     ],
     github: "https://github.com/cyberbrolly/ConsoleChess",
-    demo: "#",
-  },
-
-  {
-    title: "Vaultchain",
-    description:
-      "A blockchain-inspired storage system and one of my earliest flagship engineering projects exploring distributed data concepts and secure storage architecture.",
-    image: "/images/projects/vaultchain.png",
-    stack: [
-      "Blockchain",
-      "Storage",
-      "Distributed Systems",
-    ],
-    github: "#",
-    demo: "#",
   },
 ];
