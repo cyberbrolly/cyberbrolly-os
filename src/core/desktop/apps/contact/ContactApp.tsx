@@ -33,7 +33,6 @@ const contacts = [
     icon: "📍",
     label: "Location",
     value: "Nigeria",
-    href: "https://www.google.com/maps/search/?api=1&query=Nigeria",
   },
 ];
 
@@ -46,6 +45,7 @@ export function ContactApp() {
         <h2 className="font-bold text-green-300">🟢 Available for</h2>
         <ul className="mt-2 space-y-1 text-green-400">
           <li>• Full-time</li>
+          <li>• Contract</li>
           <li>• Freelance</li>
           <li>• Open Source</li>
         </ul>
